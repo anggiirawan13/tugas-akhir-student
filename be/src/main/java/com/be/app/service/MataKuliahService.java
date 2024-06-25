@@ -11,7 +11,7 @@ public interface MataKuliahService {
 
     BaseResponse deleteMataKuliahByUUID(String uuid);
 
-    BaseResponse getMataKuliah(int page, int limit);
+    BaseResponse getMataKuliah(int page, int limit, String search);
 
     BaseResponse getMataKuliahByUUID(String uuid);
 

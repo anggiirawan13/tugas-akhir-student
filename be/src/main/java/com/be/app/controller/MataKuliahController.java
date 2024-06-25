@@ -30,8 +30,8 @@ public class MataKuliahController {
     }
 
     @GetMapping
-    private BaseResponse getMataKuliah(@RequestParam(value = "page", required = false, defaultValue = "0") int page, @RequestParam(value = "limit", required = false, defaultValue = "0") int limit) {
-        return mataKuliahService.getMataKuliah(page, limit);
+    private BaseResponse getMataKuliah(@RequestParam(value = "page", required = false, defaultValue = "0") int page, @RequestParam(value = "limit", required = false, defaultValue = "0") int limit, @RequestParam(value = "search", required = false, defaultValue = "") String search) {
+        return mataKuliahService.getMataKuliah(page, limit, search);
     }
 
     @GetMapping(value = "/{uuid}")

@@ -29,11 +29,6 @@ public class MataKuliahServiceImpl implements MataKuliahService {
     @Override
     public BaseResponse saveMataKuliah(MataKuliahRequest request) {
         try {
-            MataKuliahEntity oldMataKuliah = mataKuliahRepository.findByKodeMataKuliah(request.getKodeMataKuliah());
-            if (NullEmptyChecker.isNotNullOrEmpty(oldMataKuliah)) {
-                return new BaseResponse(false, ResponseMessagesConst.ALREADY_EXIST.toString(), null);
-            }
-
             MataKuliahEntity newMataKuliah = new MataKuliahEntity();
             newMataKuliah.setUuid(UUID.randomUUID().toString());
             newMataKuliah.setKodeMataKuliah(request.getKodeMataKuliah());
@@ -93,13 +88,13 @@ public class MataKuliahServiceImpl implements MataKuliahService {
     }
 
     @Override
-    public BaseResponse getMataKuliah(int page, int limit) {
+    public BaseResponse getMataKuliah(int page, int limit, String search) {
         try {
             List<MataKuliahEntity> listMataKuliah;
             HashMap<String, Object> addEntity = new HashMap<>();
             if (page < 0 || NullEmptyChecker.isNullOrEmpty(limit)) {
                 listMataKuliah = mataKuliahRepository.findAll();
-            } else {
+            } else if (NullEmptyChecker.isNullOrEmpty(search)) {
                 Pageable pageable = PageRequest.of(page, limit);
                 Page<MataKuliahEntity> pageMataKuliah = mataKuliahRepository.findAll(pageable);
                 listMataKuliah = pageMataKuliah.toList();
@@ -108,6 +103,8 @@ public class MataKuliahServiceImpl implements MataKuliahService {
                 addEntity.put("totalData", pageMataKuliah.getTotalElements());
                 addEntity.put("numberOfData", pageMataKuliah.getNumberOfElements());
                 addEntity.put("number", pageMataKuliah.getNumber());
+            } else {
+                listMataKuliah = mataKuliahRepository.findByKodeOrNamaMataKuliah(search);
             }
 
             if (NullEmptyChecker.isNotNullOrEmpty(listMataKuliah)) {
