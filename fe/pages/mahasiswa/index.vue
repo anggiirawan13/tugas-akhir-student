@@ -109,7 +109,7 @@ export default {
       const { page, itemsPerPage } = this.options;
 
       this.$axios
-        .$get(`/mahasiswa?page=${page - 1}&limit=${itemsPerPage}`)
+        .$get(`/mahasiswa?page=${page - 1}&limit=${itemsPerPage}&search=${this.search}`)
         .then((response) => {
           this.mahasiswa = [];
           this.totalData = 0;
@@ -119,6 +119,7 @@ export default {
             this.totalData = response.additionalEntity.totalData;
 
             let i = response.additionalEntity.number * itemsPerPage + 1;
+            i = isNaN(i) ? 1 : i;
             this.mahasiswa.map((item) => (item.number = i++));
           }
         })
@@ -136,7 +137,7 @@ export default {
           await this.getMahasiswa();
           this.alertType = "success";
           this.message = this.$t("DELETE_SUCCESS", {
-            nama_mahasiswa: this.itemDelete.nama_mahasiswa,
+            title: this.itemDelete.nama_mahasiswa,
           });
         })
         .catch((error) => {

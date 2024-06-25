@@ -75,7 +75,7 @@ export default {
               params: {
                 type: "success",
                 message: "ADD_SUCCESS",
-                title: this.form.kode_mata_kuliah,
+                title: this.form.nama_mata_kuliah,
               },
             });
           })

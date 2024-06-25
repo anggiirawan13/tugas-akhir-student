@@ -121,6 +121,7 @@ export default {
             this.totalData = response.additionalEntity.totalData;
 
             let i = response.additionalEntity.number * itemsPerPage + 1;
+            i = isNaN(i) ? 1 : i;
             this.matkul.map((matkul) => (matkul.number = i++));
           }
         })
@@ -132,7 +133,6 @@ export default {
         });
     },
     confirmDelete(id) {
-      console.log(this.itemDelete)
       this.$axios
         .$delete(`/mata-kuliah/${id}`)
         .then(async () => {

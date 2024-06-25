@@ -81,7 +81,7 @@ export default {
               params: {
                 type: "success",
                 message: "ADD_SUCCESS",
-                title: this.form.nim,
+                title: this.form.nama_mahasiswa,
               },
             });
           })
