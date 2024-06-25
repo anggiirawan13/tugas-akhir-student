@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MataKuliahRepository extends JpaRepository<MataKuliahEntity, Long> {
 
-    @Query(value = "SELECT * FROM category WHERE uuid = :uuid AND status = 'active'", nativeQuery = true)
+    @Query(value = "SELECT * FROM mata_kuliah WHERE uuid = :uuid", nativeQuery = true)
     MataKuliahEntity findByUUID(@Param("uuid") String uuid);
 
-    @Query(value = "SELECT * FROM category WHERE category_code = :category_code AND status = 'active'", nativeQuery = true)
-    MataKuliahEntity findByKodeMataKuliah(@Param("category_code") String category_code);
+    @Query(value = "SELECT * FROM mata_kuliah WHERE kode_mata_kuliah = :kode_mata_kuliah", nativeQuery = true)
+    MataKuliahEntity findByKodeMataKuliah(@Param("kode_mata_kuliah") String kode_mata_kuliah);
 
 }

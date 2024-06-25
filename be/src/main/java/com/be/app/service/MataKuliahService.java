@@ -1,14 +1,13 @@
 package com.be.app.service;
 
-import com.be.app.dto.request.MataKuliahInsertRequest;
-import com.be.app.dto.request.MataKuliahUpdateRequest;
+import com.be.app.dto.request.MataKuliahRequest;
 import com.be.app.dto.response.BaseResponse;
 
 public interface MataKuliahService {
 
-    BaseResponse saveMataKuliah(MataKuliahInsertRequest request);
+    BaseResponse saveMataKuliah(MataKuliahRequest request);
 
-    BaseResponse updateMataKuliahByUUID(String uuid, MataKuliahUpdateRequest request);
+    BaseResponse updateMataKuliahByUUID(String uuid, MataKuliahRequest request);
 
     BaseResponse deleteMataKuliahByUUID(String uuid);
 

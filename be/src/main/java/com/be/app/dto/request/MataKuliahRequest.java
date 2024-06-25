@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @NonNull
-public class MataKuliahInsertRequest implements Serializable {
+public class MataKuliahRequest implements Serializable {
 
     @JsonProperty("kode_mata_kuliah")
     private String kodeMataKuliah;

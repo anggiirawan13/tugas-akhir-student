@@ -1,7 +1,6 @@
 package com.be.app.impl;
 
-import com.be.app.dto.request.MahasiswaInsertRequest;
-import com.be.app.dto.request.MahasiswaUpdateRequest;
+import com.be.app.dto.request.MahasiswaRequest;
 import com.be.app.dto.response.BaseResponse;
 import com.be.app.entity.MahasiswaEntity;
 import com.be.app.repository.MahasiswaRepository;
@@ -28,7 +27,7 @@ public class MahasiswaServiceImpl implements MahasiswaService {
     private MahasiswaRepository mahasiswaRepository;
 
     @Override
-    public BaseResponse saveMahasiswa(MahasiswaInsertRequest mahasiswaRequest) {
+    public BaseResponse saveMahasiswa(MahasiswaRequest mahasiswaRequest) {
         try {
 
             MahasiswaEntity newMahasiswa = new MahasiswaEntity();
@@ -50,7 +49,7 @@ public class MahasiswaServiceImpl implements MahasiswaService {
     }
 
     @Override
-    public BaseResponse updateMahasiswaByUUID(String uuid, MahasiswaUpdateRequest mahasiswaRequest) {
+    public BaseResponse updateMahasiswaByUUID(String uuid, MahasiswaRequest mahasiswaRequest) {
         try {
             MahasiswaEntity oldMahasiswa = mahasiswaRepository.findByUUID(uuid);
             if (NullEmptyChecker.isNullOrEmpty(oldMahasiswa)) {

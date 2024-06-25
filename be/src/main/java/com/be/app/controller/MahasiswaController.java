@@ -1,7 +1,6 @@
 package com.be.app.controller;
 
-import com.be.app.dto.request.MahasiswaInsertRequest;
-import com.be.app.dto.request.MahasiswaUpdateRequest;
+import com.be.app.dto.request.MahasiswaRequest;
 import com.be.app.dto.response.BaseResponse;
 import com.be.app.impl.MahasiswaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,12 @@ public class MahasiswaController {
     private MahasiswaServiceImpl mahasiswaService;
 
     @PostMapping
-    private BaseResponse saveMahasiswa(@RequestBody MahasiswaInsertRequest request) {
+    private BaseResponse saveMahasiswa(@RequestBody MahasiswaRequest request) {
         return mahasiswaService.saveMahasiswa(request);
     }
 
     @PutMapping("/{uuid}")
-    private BaseResponse updateMahasiswa(@PathVariable("uuid") String uuid, @RequestBody MahasiswaUpdateRequest request) {
+    private BaseResponse updateMahasiswa(@PathVariable("uuid") String uuid, @RequestBody MahasiswaRequest request) {
         return mahasiswaService.updateMahasiswaByUUID(uuid, request);
     }
 

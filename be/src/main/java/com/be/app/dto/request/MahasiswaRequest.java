@@ -6,10 +6,7 @@ import lombok.NonNull;
 
 @Data
 @NonNull
-public class MahasiswaInsertRequest {
-
-    @JsonProperty(value = "uuid")
-    private String uuid;
+public class MahasiswaRequest {
 
     @JsonProperty(value = "nim")
     private String nim;

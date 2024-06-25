@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "mataKuliah")
+@Table(name = "mata_kuliah")
 public class MataKuliahEntity extends BaseEntity {
 
     @Column(name = "kode_mata_kuliah", unique = true, nullable = false, length = 20)

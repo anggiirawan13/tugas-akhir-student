@@ -1,7 +1,6 @@
 package com.be.app.impl;
 
-import com.be.app.dto.request.MataKuliahInsertRequest;
-import com.be.app.dto.request.MataKuliahUpdateRequest;
+import com.be.app.dto.request.MataKuliahRequest;
 import com.be.app.dto.response.BaseResponse;
 import com.be.app.entity.MataKuliahEntity;
 import com.be.app.repository.MataKuliahRepository;
@@ -28,7 +27,7 @@ public class MataKuliahServiceImpl implements MataKuliahService {
     private MataKuliahRepository mataKuliahRepository;
 
     @Override
-    public BaseResponse saveMataKuliah(MataKuliahInsertRequest request) {
+    public BaseResponse saveMataKuliah(MataKuliahRequest request) {
         try {
             MataKuliahEntity oldMataKuliah = mataKuliahRepository.findByKodeMataKuliah(request.getKodeMataKuliah());
             if (NullEmptyChecker.isNotNullOrEmpty(oldMataKuliah)) {
@@ -45,16 +44,16 @@ public class MataKuliahServiceImpl implements MataKuliahService {
             newMataKuliah.setCreatedAt(dateNow);
             newMataKuliah.setModifiedAt(dateNow);
 
-            MataKuliahEntity category = mataKuliahRepository.save(newMataKuliah);
+            MataKuliahEntity mataKuliah = mataKuliahRepository.save(newMataKuliah);
 
-            return new BaseResponse(true, ResponseMessagesConst.INSERT_SUCCESS.toString(), category);
+            return new BaseResponse(true, ResponseMessagesConst.INSERT_SUCCESS.toString(), mataKuliah);
         } catch (Exception e) {
             return InternalServerErrorHandler.InternalServerError(e);
         }
     }
 
     @Override
-    public BaseResponse updateMataKuliahByUUID(String uuid, MataKuliahUpdateRequest request) {
+    public BaseResponse updateMataKuliahByUUID(String uuid, MataKuliahRequest request) {
         try {
             MataKuliahEntity oldMataKuliah = mataKuliahRepository.findByUUID(uuid);
             if (NullEmptyChecker.isNullOrEmpty(oldMataKuliah)) {
@@ -69,9 +68,9 @@ public class MataKuliahServiceImpl implements MataKuliahService {
 
             updateMataKuliah.setModifiedAt(dateNow);
 
-            MataKuliahEntity category = mataKuliahRepository.save(updateMataKuliah);
+            MataKuliahEntity mataKuliah = mataKuliahRepository.save(updateMataKuliah);
 
-            return new BaseResponse(true, ResponseMessagesConst.UPDATE_SUCCESS.toString(), category);
+            return new BaseResponse(true, ResponseMessagesConst.UPDATE_SUCCESS.toString(), mataKuliah);
         } catch (Exception e) {
             return InternalServerErrorHandler.InternalServerError(e);
         }

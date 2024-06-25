@@ -1,14 +1,13 @@
 package com.be.app.service;
 
-import com.be.app.dto.request.MahasiswaInsertRequest;
-import com.be.app.dto.request.MahasiswaUpdateRequest;
+import com.be.app.dto.request.MahasiswaRequest;
 import com.be.app.dto.response.BaseResponse;
 
 public interface MahasiswaService {
 
-    BaseResponse saveMahasiswa(MahasiswaInsertRequest request);
+    BaseResponse saveMahasiswa(MahasiswaRequest request);
 
-    BaseResponse updateMahasiswaByUUID(String uuid, MahasiswaUpdateRequest request);
+    BaseResponse updateMahasiswaByUUID(String uuid, MahasiswaRequest request);
 
     BaseResponse deleteMahasiswaByUUID(String uuid);
 
