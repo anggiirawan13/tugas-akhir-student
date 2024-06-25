@@ -40,7 +40,7 @@
                 <v-card>
                   <v-card-title
                     >Kamu yakin ingin menghapus data
-                    {{ itemDelete.title }}?</v-card-title
+                    {{ itemDelete.nama_mata_kuliah }}?</v-card-title
                   >
                   <v-card-actions>
                     <v-spacer></v-spacer>
@@ -50,7 +50,7 @@
                     <v-btn
                       color="error"
                       text
-                      @click="confirmDelete(itemDelete.id)"
+                      @click="confirmDelete(itemDelete.uuid)"
                       >Delete</v-btn
                     >
                   </v-card-actions>
@@ -58,7 +58,7 @@
               </v-dialog>
             </template>
             <template v-slot:item.actions="{ item }">
-              <v-btn :to="`/matkul/edit/${item.uuid}`" icon
+              <v-btn :to="`/mata-kuliah/edit/${item.uuid}`" icon
                 ><v-icon small>mdi-pencil</v-icon></v-btn
               >
               <v-btn small icon @click="deleteItem(item)"
@@ -90,8 +90,8 @@ export default {
       itemDelete: "",
       headers: [
         { text: "No.", value: "number", sortable: false },
-        { text: "Kode Mata Kuliah", value: "matkul_code", sortable: false },
-        { text: "Nama Mata Kuliah", value: "matkul_name", sortable: false },
+        { text: "Kode Mata Kuliah", value: "kode_mata_kuliah", sortable: false },
+        { text: "Nama Mata Kuliah", value: "nama_mata_kuliah", sortable: false },
         { text: "Actions", value: "actions", sortable: false },
       ],
       breadcrumbs: [
@@ -110,15 +110,18 @@ export default {
 
       await this.$axios
         .$get(
-          `/matkul?page=${page - 1}&limit=${itemsPerPage}&search=${this.search}`
+          `/mata-kuliah?page=${page - 1}&limit=${itemsPerPage}&search=${this.search}`
         )
         .then((response) => {
-          if (response.success) {
-          this.matkul = response.data;
-          this.totalData = response.additionalEntity.totalData;
+          this.matkul = []
+          this.totalData = 0;
 
-          let i = response.additionalEntity.number * itemsPerPage + 1;
-          this.matkul.map((matkul) => (matkul.number = i++));
+          if (response.success) {
+            this.matkul = response.data;
+            this.totalData = response.additionalEntity.totalData;
+
+            let i = response.additionalEntity.number * itemsPerPage + 1;
+            this.matkul.map((matkul) => (matkul.number = i++));
           }
         })
         .catch((error) => {
@@ -129,13 +132,14 @@ export default {
         });
     },
     confirmDelete(id) {
+      console.log(this.itemDelete)
       this.$axios
-        .$delete(`/matkul/${id}`)
+        .$delete(`/mata-kuliah/${id}`)
         .then(async () => {
           await this.getMataKuliah();
           this.alertType = "success";
           this.message = this.$t("DELETE_SUCCESS", {
-            title: this.itemDelete.title,
+            title: this.itemDelete.nama_mata_kuliah,
           });
         })
         .catch((error) => {

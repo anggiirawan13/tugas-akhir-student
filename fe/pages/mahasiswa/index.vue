@@ -40,7 +40,7 @@
                 <v-card>
                   <v-card-title
                     >Kamu yakin ingin menghapus data
-                    {{ itemDelete.mahasiswaName }}?</v-card-title
+                    {{ itemDelete.nama_mahasiswa }}?</v-card-title
                   >
                   <v-card-actions>
                     <v-spacer></v-spacer>
@@ -90,8 +90,8 @@ export default {
       itemDelete: "",
       headers: [
         { text: "No.", value: "number", sortable: false },
-        { text: "NIM", value: "mahasiswa_code", sortable: false },
-        { text: "Nama Mahasiswa", value: "mahasiswa_name", sortable: false },
+        { text: "NIM", value: "nim", sortable: false },
+        { text: "Nama Mahasiswa", value: "nama_mahasiswa", sortable: false },
         { text: "Actions", value: "actions", sortable: false },
       ],
       breadcrumbs: [
@@ -111,15 +111,15 @@ export default {
       this.$axios
         .$get(`/mahasiswa?page=${page - 1}&limit=${itemsPerPage}`)
         .then((response) => {
+          this.mahasiswa = [];
+          this.totalData = 0;
+
           if (response.success) {
             this.mahasiswa = response.data;
             this.totalData = response.additionalEntity.totalData;
 
             let i = response.additionalEntity.number * itemsPerPage + 1;
             this.mahasiswa.map((item) => (item.number = i++));
-          } else {
-            this.mahasiswa = [];
-            this.totalData = 0;
           }
         })
         .catch((error) => {
@@ -136,7 +136,7 @@ export default {
           await this.getMahasiswa();
           this.alertType = "success";
           this.message = this.$t("DELETE_SUCCESS", {
-            mahasiswaName: this.itemDelete.mahasiswaName,
+            nama_mahasiswa: this.itemDelete.nama_mahasiswa,
           });
         })
         .catch((error) => {
@@ -171,7 +171,7 @@ export default {
     if (this.$route.params.message) {
       this.alertType = this.$route.params.type;
       this.message = this.$t(this.$route.params.message, {
-        mahasiswaName: this.$route.params.mahasiswaName,
+        title: this.$route.params.nama_mahasiswa,
       });
     }
   },

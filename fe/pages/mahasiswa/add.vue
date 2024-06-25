@@ -10,18 +10,18 @@
           <v-breadcrumbs :items="breadcrumbs" class="pa-0"></v-breadcrumbs>
           <v-form ref="form">
             <v-text-field
-              name="mahasiswaCode"
+              name="nim"
               label="NIM"
               type="text"
-              :rules="rules.mahasiswaCode"
-              v-model="form.mahasiswa_code"
+              :rules="rules.nim"
+              v-model="form.nim"
             />
             <v-text-field
-              name="mahasiswaName"
+              name="nama_mahasiswa"
               label="Nama Mahasiswa"
               type="text"
-              :rules="rules.mahasiswaName"
-              v-model="form.mahasiswa_name"
+              :rules="rules.nama_mahasiswa"
+              v-model="form.nama_mahasiswa"
             />
           </v-form>
         </v-card-text>
@@ -52,16 +52,15 @@ export default {
       message: "",
       status: ["active", "inactive"],
       form: {
-        mahasiswa_code: "",
-        mahasiswa_name: "",
-        status: "",
+        nim: "",
+        nama_mahasiswa: "",
       },
       rules: {
-        mahasiswaCode: [
+        nim: [
           (v) =>
             !!v || this.$t("FIELD_IS_REQUIRED", { field: "NIM" }),
         ],
-        mahasiswaName: [
+        nama_mahasiswa: [
           (v) =>
             !!v || this.$t("FIELD_IS_REQUIRED", { field: "Nama Mahasiswa" }),
         ],
@@ -82,7 +81,7 @@ export default {
               params: {
                 type: "success",
                 message: "ADD_SUCCESS",
-                title: this.form.mahasiswa_code,
+                title: this.form.nim,
               },
             });
           })

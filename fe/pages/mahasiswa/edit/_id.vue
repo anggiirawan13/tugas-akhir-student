@@ -10,25 +10,19 @@
           <v-breadcrumbs :items="breadcrumbs" class="pa-0"></v-breadcrumbs>
           <v-form ref="form">
             <v-text-field
-              name="mahasiswaCode"
+              name="nim"
               label="NIM"
               type="text"
-              :rules="rules.mahasiswaCode"
-              v-model="form.mahasiswa_code"
+              :rules="rules.nim"
+              v-model="form.nim"
             />
             <v-text-field
-              name="mahasiswaName"
+              name="nama_mahasiswa"
               label="Nama Mahasiswa"
               type="text"
-              :rules="rules.mahasiswaName"
-              v-model="form.mahasiswa_name"
+              :rules="rules.nama_mahasiswa"
+              v-model="form.nama_mahasiswa"
             />
-            <v-select
-              v-model="form.status"
-              :items="status"
-              label="Status"
-              :rules="rules.status"
-            ></v-select>
           </v-form>
         </v-card-text>
         <v-card-actions>
@@ -63,21 +57,17 @@ export default {
       message: "",
       status: ["active", "inactive"],
       form: {
-        mahasiswa_code: "",
-        mahasiswa_name: "",
-        status: "",
+        nim: "",
+        nama_mahasiswa: "",
       },
       rules: {
-        mahasiswa_code: [
+        nim: [
           (v) =>
             !!v || this.$t("FIELD_IS_REQUIRED", { field: "NIM" }),
         ],
-        mahasiswa_name: [
+        nama_mahasiswa: [
           (v) =>
             !!v || this.$t("FIELD_IS_REQUIRED", { field: "Nama Mahasiswa" }),
-        ],
-        status: [
-          (v) => !!v || this.$t("FIELD_IS_REQUIRED", { field: "Status" }),
         ],
       },
     };
@@ -96,7 +86,7 @@ export default {
               params: {
                 type: "success",
                 message: "UPDATE_SUCCESS",
-                title: this.form.mahasiswa_code,
+                title: this.form.nim,
               },
             });
           })
@@ -106,7 +96,7 @@ export default {
               params: {
                 type: "error",
                 message: "UPDATE_FAILED",
-                title: this.form.mahasiswa_code,
+                title: this.form.nim,
               },
             });
           });
@@ -120,9 +110,8 @@ export default {
         .then((response) => {
           const { data } = response;
 
-          this.form.mahasiswa_code = data.mahasiswa_code;
-          this.form.mahasiswa_name = data.mahasiswa_name;
-          this.form.status = data.status;
+          this.form.nim = data.nim;
+          this.form.nama_mahasiswa = data.nama_mahasiswa;
         })
         .catch((error) => {
           console.log(error);

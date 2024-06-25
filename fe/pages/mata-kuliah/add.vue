@@ -7,18 +7,18 @@
           <v-breadcrumbs :items="breadcrumbs" class="pa-0"></v-breadcrumbs>
           <v-form ref="form">
             <v-text-field
-              name="matkulCode"
+              name="kode_mata_kuliah"
               label="Kode Mata Kuliah"
               type="text"
-              :rules="rules.matkulCode"
-              v-model="form.matkul_code"
+              :rules="rules.kode_mata_kuliah"
+              v-model="form.kode_mata_kuliah"
             />
             <v-text-field
-              name="matkulName"
+              name="nama_mata_kuliah"
               label="Nama Mata Kuliah"
               type="text"
-              :rules="rules.matkulName"
-              v-model="form.matkul_name"
+              :rules="rules.nama_mata_kuliah"
+              v-model="form.nama_mata_kuliah"
             />
           </v-form>
         </v-card-text>
@@ -49,14 +49,14 @@ export default {
       status: ["active", "inactive"],
       mahasiswa: [],
       form: {
-        matkul_code: "",
-        matkul_name: "",
+        kode_mata_kuliah: "",
+        nama_mata_kuliah: "",
       },
       rules: {
-        matkulCode: [
+        kode_mata_kuliah: [
           (v) => !!v || this.$t("FIELD_IS_REQUIRED", { field: "Kode Mata Kuliah" }),
         ],
-        matkulName: [
+        nama_mata_kuliah: [
           (v) => !!v || this.$t("FIELD_IS_REQUIRED", { field: "Nama Mata Kuliah" }),
         ],
       },
@@ -66,16 +66,16 @@ export default {
     async doSave() {
       if (this.$refs.form.validate()) {
         this.btnSaveDisable = true;
-
+        console.log(this.form)
         await this.$axios
-          .$post("/matkul", this.form)
+          .$post("/mata-kuliah", this.form)
           .then(() => {
             this.$router.push({
-              name: `matkul___${this.$i18n.locale}`,
+              name: `mata-kuliah___${this.$i18n.locale}`,
               params: {
                 type: "success",
                 message: "ADD_SUCCESS",
-                title: this.form.matkul_code,
+                title: this.form.kode_mata_kuliah,
               },
             });
           })
