@@ -1,9 +1,12 @@
 package com.be.app.impl;
 
 import com.be.app.dto.request.MahasiswaRequest;
+import com.be.app.dto.request.MataKuliahNilaiRequest;
 import com.be.app.dto.response.BaseResponse;
 import com.be.app.entity.MahasiswaEntity;
+import com.be.app.entity.MataKuliahNilaiEntity;
 import com.be.app.repository.MahasiswaRepository;
+import com.be.app.repository.MataKuliahNilaiRepository;
 import com.be.app.service.MahasiswaService;
 import com.be.constanta.ResponseMessagesConst;
 import com.be.handler.InternalServerErrorHandler;
@@ -26,6 +29,9 @@ public class MahasiswaServiceImpl implements MahasiswaService {
     @Autowired
     private MahasiswaRepository mahasiswaRepository;
 
+    @Autowired
+    private MataKuliahNilaiRepository mataKuliahNilaiRepository;
+
     @Override
     public BaseResponse saveMahasiswa(MahasiswaRequest mahasiswaRequest) {
         try {
@@ -41,6 +47,18 @@ public class MahasiswaServiceImpl implements MahasiswaService {
             newMahasiswa.setModifiedAt(dateNow);
 
             MahasiswaEntity listNewMahasiswa = mahasiswaRepository.save(newMahasiswa);
+
+            for (MataKuliahNilaiRequest item : mahasiswaRequest.getListNilai()) {
+                MataKuliahNilaiEntity nilai = new MataKuliahNilaiEntity();
+                nilai.setUuid(UUID.randomUUID().toString());
+                nilai.setMahasiswaID(listNewMahasiswa.getId());
+                nilai.setMataKuliahID(item.getMataKuliahID());
+                nilai.setNilai(item.getNilai());
+                nilai.setCreatedAt(dateNow);
+                nilai.setModifiedAt(dateNow);
+
+                mataKuliahNilaiRepository.save(nilai);
+            }
 
             return new BaseResponse(true, ResponseMessagesConst.INSERT_SUCCESS.toString(), listNewMahasiswa);
         } catch (Exception e) {

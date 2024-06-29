@@ -6,9 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -25,5 +24,10 @@ public class MahasiswaEntity extends BaseEntity {
     @Column(name = "nama_mahasiswa", nullable = false)
     @JsonProperty("nama_mahasiswa")
     private String namaMahasiswa;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "mahasiswa_id")
+    @JsonProperty("nilai")
+    private List<MataKuliahNilaiEntity> nilai;
 
 }
