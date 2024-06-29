@@ -40,7 +40,7 @@
 <script>
 export default {
   head: {
-    title: "Edit MataKuliah",
+    title: "Edit Mata Kuliah",
   },
   asyncData({ params }) {
     return {
