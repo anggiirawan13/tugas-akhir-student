@@ -37,17 +37,17 @@ export default {
       sideDrawer: false,
       sideMenu: [
         {
-          icon: "mdi-coffee",
+          icon: "mdi-library",
           title: "Data Mata Kuliah",
           to: "/mata-kuliah",
         },
         {
-          icon: "mdi-shape",
+          icon: "mdi-account-school",
           title: "Data Mahasiswa",
           to: "/mahasiswa",
         },
         {
-          icon: "mdi-shape",
+          icon: "mdi-file",
           title: "Report",
           to: "/report",
         },
