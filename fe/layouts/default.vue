@@ -46,6 +46,11 @@ export default {
           title: "Data Mahasiswa",
           to: "/mahasiswa",
         },
+        {
+          icon: "mdi-shape",
+          title: "Report",
+          to: "/report",
+        },
       ],
     };
   },

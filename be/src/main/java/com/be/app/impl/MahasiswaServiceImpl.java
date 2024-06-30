@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -67,29 +68,39 @@ public class MahasiswaServiceImpl implements MahasiswaService {
     }
 
     @Override
-    public BaseResponse updateMahasiswaByUUID(String uuid, MahasiswaRequest mahasiswaRequest) {
+    public BaseResponse updateMahasiswaByUUID(String id, MahasiswaRequest mahasiswaRequest) {
         try {
-            MahasiswaEntity oldMahasiswa = mahasiswaRepository.findByUUID(uuid);
-            if (NullEmptyChecker.isNullOrEmpty(oldMahasiswa)) {
-                return new BaseResponse(false, ResponseMessagesConst.DATA_NOT_FOUND.toString(), null);
+            MahasiswaEntity existingMahasiswa = mahasiswaRepository.findByUUID(id);
+            if (existingMahasiswa == null) {
+                return new BaseResponse(false, "Mahasiswa not found", null);
             }
 
-            MahasiswaEntity updateMahasiswa = mahasiswaRepository.findByUUID(uuid);
-            updateMahasiswa.setNim(mahasiswaRequest.getNim());
-            updateMahasiswa.setNamaMahasiswa(mahasiswaRequest.getNamaMahasiswa());
+            existingMahasiswa.setNim(mahasiswaRequest.getNim());
+            existingMahasiswa.setNamaMahasiswa(mahasiswaRequest.getNamaMahasiswa());
+            existingMahasiswa.setModifiedAt(DateHelper.getTimestampNow());
 
+            MahasiswaEntity updatedMahasiswa = mahasiswaRepository.save(existingMahasiswa);
 
-            Timestamp dateNow = DateHelper.getTimestampNow();
+            mataKuliahNilaiRepository.deleteByMahasiswaID(updatedMahasiswa.getId());
 
-            updateMahasiswa.setModifiedAt(dateNow);
+            for (MataKuliahNilaiRequest item : mahasiswaRequest.getListNilai()) {
+                MataKuliahNilaiEntity nilai = new MataKuliahNilaiEntity();
+                nilai.setUuid(UUID.randomUUID().toString());
+                nilai.setMahasiswaID(updatedMahasiswa.getId());
+                nilai.setMataKuliahID(item.getMataKuliahID());
+                nilai.setNilai(item.getNilai());
+                nilai.setCreatedAt(DateHelper.getTimestampNow());
+                nilai.setModifiedAt(DateHelper.getTimestampNow());
 
-            MahasiswaEntity mahasiswa = mahasiswaRepository.save(updateMahasiswa);
+                mataKuliahNilaiRepository.save(nilai);
+            }
 
-            return new BaseResponse(true, ResponseMessagesConst.UPDATE_SUCCESS.toString(), mahasiswa);
+            return new BaseResponse(true, ResponseMessagesConst.UPDATE_SUCCESS.toString(), updatedMahasiswa);
         } catch (Exception e) {
             return InternalServerErrorHandler.InternalServerError(e);
         }
     }
+
 
     @Override
     public BaseResponse deleteMahasiswaByUUID(String uuid) {
