@@ -110,6 +110,8 @@ public class MahasiswaServiceImpl implements MahasiswaService {
                 return new BaseResponse(false, ResponseMessagesConst.DATA_NOT_FOUND.toString(), null);
             }
 
+            mataKuliahNilaiRepository.deleteByMahasiswaID(oldMahasiswa.getId());
+
             mahasiswaRepository.delete(oldMahasiswa);
 
             return new BaseResponse(true, ResponseMessagesConst.UPDATE_SUCCESS.toString(), null);

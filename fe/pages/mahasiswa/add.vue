@@ -152,7 +152,14 @@ export default {
           console.log('Response:', response);
 
           // Reset form and related data
-          this.resetForm();
+          this.$router.push({
+            name: `mahasiswa___${this.$i18n.locale}`,
+            params: {
+              type: "error",
+              message: response.messages,
+              title: this.form.nama_mahasiswa,
+            },
+          });
         } catch (error) {
           console.error('Error:', error);
           // Handle error if needed (e.g., show error message)
